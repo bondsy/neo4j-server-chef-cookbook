@@ -70,8 +70,8 @@ bash "extract #{tmp}, move it to #{node.neo4j.server.installation_dir}" do
 
   code <<-EOS
     rm -rf #{node.neo4j.server.installation_dir}
-    tar xfz #{tmp}
-    mv --force `tar -tf #{tmp} | head -n 1` #{node.neo4j.server.installation_dir}
+    tar vxfz #{tmp} --index-file neo4j-community.files
+    mv --force `head -1 neo4j-community.files | cut -d/ -f1` #{node.neo4j.server.installation_dir}
   EOS
 
   creates "#{node.neo4j.server.installation_dir}/bin/neo4j"
