@@ -33,6 +33,14 @@ default[:neo4j][:server] = {
       :url => "https://github.com/downloads/goodwink/neo4j-server-chef-cookbook/neo4j-spatial-0.9-SNAPSHOT-server-plugin.zip",
       :version => "0.9-SNAPSHOT",
       :md5 => "65e6d30e856f191a20f3f6e78eaaf5a7"
+    },
+    :authentication => {
+      :enabled => true,
+      :url => "http://dist.neo4j.org.s3.amazonaws.com/authentication-extension/authentication-extension-1.9-SNAPSHOT-1.0-SNAPSHOT-server-plugin.zip",
+      :version => "1.9-SNAPSHOT-1.0-SNAPSHOT",
+      :md5 => "583c758e462859a538ca420da7d39900",
+      :username => 'weesjeavnifitdatt',
+      :password => 'grydainwoghtejoju'
     }
   },
   :node_auto_indexing => {

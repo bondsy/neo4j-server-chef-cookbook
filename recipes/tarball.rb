@@ -48,6 +48,7 @@ require "tmpdir"
 td          = Dir.tmpdir
 tmp         = File.join(td, "neo4j-community-#{node.neo4j.server.version}.tar.gz")
 tmp_spatial = File.join(td, "neo4j-spatial-#{node.neo4j.server.plugins.spatial.version}-server-plugin.zip")
+tmp_authentication = File.join(td, "authentication-extension-#{node.neo4j.server.plugins.authentication.version}-server-plugin.zip")
 tarball_url = "http://dist.neo4j.org/neo4j-community-#{node.neo4j.server.version}-unix.tar.gz"
 
 remote_file(tmp) do
@@ -59,6 +60,12 @@ end
 if node.neo4j.server.plugins.spatial.enabled
   remote_file(tmp_spatial) do
     source node.neo4j.server.plugins.spatial.url
+  end
+end
+
+if node.neo4j.server.plugins.authentication.enabled
+  remote_file(tmp_authentication) do
+    source node.neo4j.server.plugins.authentication.url
   end
 end
 
@@ -87,6 +94,19 @@ if node.neo4j.server.plugins.spatial.enabled
     EOS
 
     creates "#{node.neo4j.server.installation_dir}/plugins/neo4j-spatial-#{node.neo4j.server.plugins.spatial.version}.jar"
+  end
+end
+
+if node.neo4j.server.plugins.authentication.enabled
+  bash "extract #{tmp_authentication}, move it to #{node.neo4j.server.installation_dir}/plugins" do
+    user "root"
+    cwd "/tmp"
+
+    code <<-EOS
+      unzip #{tmp_authentication} -d #{node.neo4j.server.installation_dir}/plugins
+    EOS
+
+    creates "#{node.neo4j.server.installation_dir}/plugins/authentication-extension-#{node.neo4j.server.plugins.authentication.version}.jar"
   end
 end
 
