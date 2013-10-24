@@ -119,6 +119,13 @@ end
   end
 end
 
+directory node.neo4j.server.lib_dir do
+    owner     "root"
+    group     node.neo4j.server.user
+    recursive true
+    action    :create
+end
+
 [node.neo4j.server.lib_dir,
  node.neo4j.server.data_dir,
  File.join(node.neo4j.server.installation_dir, "data"),
